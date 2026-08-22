@@ -1,9 +1,7 @@
+import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
 import "./globals.css";
-const appfont=DM_Sans({
-subsets:["latin"]
-})
+import Provider from "./provider";
 
 
 export const metadata: Metadata = {
@@ -15,8 +13,31 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
       <body
-      className={appfont.className}>
-       {children}</body>
+      className="font-sans">
+        
+        <ClerkProvider>
+          
+          <header style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
+            <Show when="signed-out">
+              <SignInButton>
+                <button>Sign In</button>
+              </SignInButton>
+              <SignUpButton>
+                <button>Sign Up</button>
+              </SignUpButton>
+            </Show>
+            <Show when="signed-in">
+              <UserButton />
+            </Show>
+          </header>
+    <Provider>
+   {children}
+
+      </Provider>
+           
+        
+        </ClerkProvider>
+      </body>
     </html>
   );
 }
