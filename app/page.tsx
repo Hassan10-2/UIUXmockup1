@@ -9,6 +9,7 @@ export default function Home() {
     <Button>subscribe
       
     </Button>
+  
     </div>
   );
 }
